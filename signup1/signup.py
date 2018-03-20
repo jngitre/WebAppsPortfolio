@@ -6,11 +6,13 @@ entered_username = ""
 entered_password_1 = ""
 entered_password_2 = ""
 entered_email = ""
+
+# Regex used for password/username/email validity checks
 USERNAME_RE = re.compile("^([a-zA-Z0-9\-\_]{3,20})$")
 PASSWORD_RE = re.compile("^(.{3,20})$")
 EMAIL_RE = re.compile("^(.+?)\@(.+?)\.(.+?)")
 
-
+#HTML for page's main form
 signup_form = """
   <head>
     <meta charset="utf-8">
@@ -58,22 +60,31 @@ class MainPage(webapp2.RequestHandler):
 		self.response.headers['Content-Type'] = 'text/html'
 		self.write_form()
 	def write_form(self, u_error="", p_error="", e_error="", v_error=""):
-		self.response.write(signup_form % {"u_error": u_error, "p_error": p_error, "e_error": e_error, "v_error": v_error})
+		self.response.write(signup_form % {"u_error": u_error, "p_error": p_error, 
+										   "e_error": e_error, "v_error": v_error})
 	
-class TestHandler(webapp2.RequestHandler):
+class PostHandler(webapp2.RequestHandler):
 	def post(self):
 		global entered_username, entered_password_1, entered_password_2, entered_email
+
+		#initializes error messages
 		u_error = ""
 		p_error = ""
 		v_error = ""
 		e_error = ""
+
+		# gets form values from post request
 		entered_username = self.request.get("username")
 		entered_password_1 = self.request.get("password")
 		entered_password_2 = self.request.get("verify")
 		entered_email = self.request.get("email")
+
+		# checks if each valeu is valid
 		username = self.valid_user()
 		password = self.valid_pass()
 		email = self.valid_email()
+
+		# assigns appropriate error messages
 		if(not username):
 			u_error = "Invalid username"
 		if(not password):
@@ -84,6 +95,8 @@ class TestHandler(webapp2.RequestHandler):
 			e_error = "Invalid email address"
 		
 		self.write_form(u_error, p_error, e_error, v_error)
+
+		# if no errors, signup complete, redirect to welcome page
 		if(u_error == "" and p_error=="" and e_error== "" and v_error==""):
 			self.redirect("/welcome")
 		
@@ -118,6 +131,6 @@ class WelcomePage(webapp2.RequestHandler):
 		
 application = webapp2.WSGIApplication([
 	('/', MainPage), 
-	('/test', TestHandler),
+	('/test', PostHandler),
 	('/welcome', WelcomePage)
 ], debug = True)
