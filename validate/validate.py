@@ -1,28 +1,11 @@
 import webapp2
 import cgi
 
+# to prevent code insertion in input boxes of form
 def escape_html(s):
 		return cgi.escape(s, quote = True)
-		
-		
-form = """ <div> 
-<h2>What is your birthday?</h2>
-<form method="post" action="/validate">
-<label> Month
-<input type="text" name = "month" value="%(month)s"> </label>
-<br>
-<label> Day
-<input type="text" name = "day" value="%(day)s"> </label>
-<br>
-<label> Year
-<input type="text" name = "year" value="%(year)s"> </label>
-<br> <br>
-<input type="submit">
-</form>
-<div>%(error)s</div>
-</div>
-"""
 
+# HTML for a styled form
 form2 = """ <div style="padding: 200px"> 
 <h2 style="text-align: center; color:  #98AFC7" >What is your birthday?</h2>
 <form style = "text-align:center; font-family:Arial" method="post" action="/validate">
@@ -40,6 +23,7 @@ form2 = """ <div style="padding: 200px">
 <div style="text-align: center; font-family: Arial; color: #E74C3C">%(error)s</div>
 </div>
 """
+
 month=""
 day=""
 year="" 
@@ -53,17 +37,23 @@ class MainPage(webapp2.RequestHandler):
 		self.response.write(form2 % {"error": error, "month": month, "day": day, "year": year})
 		
 
-class TestHandler(webapp2.RequestHandler):
+class PostHandler(webapp2.RequestHandler):
 	def post(self):
+		# gets the global values of month, day, and year
 		global month
 		global day
 		global year
+
+		# gets the form values from the post request
 		month = self.request.get("month")
 		day = self.request.get("day")
 		year = self.request.get("year")
+
 		month = escape_html(month)
 		year = escape_html(year)
 		day = escape_html(day)
+
+		# checks if each value is valid
 		if(self.valid_day() and self.valid_month() and self.valid_year()):
 			self.redirect("/success")
 		else:
@@ -81,7 +71,9 @@ class TestHandler(webapp2.RequestHandler):
 			
 	def valid_month(self):
 		global month
-		if(month[:3] == "Jan" or month[:3] == "Feb" or month[:3] == "Mar" or month[:3] == "Apr" or month[:3] == "May" or month[:3] == "Jun" or month[:3] == "Jul" or month[:3] == "Aug" or month[:3] == "Sep" or month[:3] == "Nov" or month[:3] == "Dec"):
+		months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+		          "Jul", "Aug", "Sep", "Nov", "Dec"]
+		if(month[:3] in months):
 			return True
 		else:
 			return False
@@ -105,6 +97,6 @@ class SuccessPage(webapp2.RequestHandler):
 		
 application = webapp2.WSGIApplication([
 	('/', MainPage), 
-	('/validate', TestHandler),
+	('/validate', PostHandler),
 	('/success', SuccessPage)
 ], debug = True)
