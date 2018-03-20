@@ -1,0 +1,38 @@
+.firstline {
+   font-size: 48px;
+   color:#99FF66;
+}
+
+p:nth-child(2){
+	color: blue;
+	font-size: 36px;
+}
+
+body{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.entern{
+	font-size: 24px;
+	color: #808080;
+}
+
+.error{
+	font-size: 18px;
+	color: red;
+}
+
+#chart{
+	float: left;
+}
+
+#resist{
+	font-size: 76px;
+}
+
+#r{
+	width: 56px;
+	height: 56px;
+}

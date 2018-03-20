@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+	<title>Welcome</title>
+  </head>
+  <body>
+    <p class="firstline">{{place_holder1}}</p>
+    <p>{{place_holder2}}</p>
+	<p class="entern"> Enter Your Name </h2>
+	<form method="post" action="/welcome">
+		<input type="text" name = "name">
+		<br><br>
+		<input type="submit">
+		<br><br>
+		<p class = "error">{{err}}</p>
+	</form>
+  </body>
+</html>

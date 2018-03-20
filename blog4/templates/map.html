@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Map</title>
+		<link rel="stylesheet" type="text/css" href="/stylesheets/blog.css">
+	</head>
+	<body>
+		<div id="links">
+			{% if not user %}
+			<a href="/login">login</a> | <a href="/signup">signup</a>
+			{% else %}
+			<a href="/blog">blog</a> | <a href="/blog/newpost">post</a> | <a href="/blog/map">map</a> | <a href="/logout">logout</a>
+			<br>
+			{{user}}
+			{%endif%}
+		</div>
+		<h1>Map</h1>
+		<img src="{{src}}">
+	</body>
+</html>

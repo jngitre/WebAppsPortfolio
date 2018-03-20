@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+	<title>Resistors</title>
+  </head>
+  <body>
+  <div id="chart">
+    <img src="/images/resistor-color-chart.jpg">
+	<form method="post" action="/resistor">
+		<select name = "fb">
+		{%for i in range(10)%}
+			{%if (colors[i] == valf)%}
+				<option value="{{colors[i]}}" selected>{{colors[i]}}</option>
+			{% else %}
+				<option value="{{colors[i]}}">{{colors[i]}}</option>
+			{% endif%}
+		{%endfor%}
+		</select>
+		<select name="sb">
+		{%for i in range(10)%}
+			{%if (colors[i] == vals)%}
+				<option value="{{colors[i]}}" selected>{{colors[i]}}</option>
+			{% else %}
+				<option value="{{colors[i]}}">{{colors[i]}}</option>
+			{% endif%}
+		{%endfor%}
+		</select>
+		<select name="tb">
+		{%for i in range(10)%}
+			{%if (colors[i] == valt)%}
+				<option value="{{colors[i]}}" selected>{{colors[i]}}</option>
+			{% else %}
+				<option value="{{colors[i]}}">{{colors[i]}}</option>
+			{% endif%}
+		{%endfor%}
+		</select>
+		<select name="m">
+		{%for i in range(10)%}
+			{%if (colors[i] == valm)%}
+				<option value="{{colors[i]}}" selected>{{colors[i]}}</option>
+			{% else %}
+				<option value="{{colors[i]}}">{{colors[i]}}</option>
+			{% endif%}
+		{%endfor%}
+		</select>
+		<button type = "submit">Submit</button>
+	</form>
+	{%if (resist) %}
+	<div id="resist">
+		{{resist}}<img id="r" src="/images/ohm.png">
+	</div>
+	{%endif%}
+	</div>
+ </body>
+</html>

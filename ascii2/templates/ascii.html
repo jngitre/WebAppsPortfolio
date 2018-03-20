@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ASCII</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/ascii.css">
+  </head>
+  <body>
+    <h1>ASCII Art</h1>
+    <form method="post" action="/test">
+      <label>
+        <div>title</div>
+        <input type="text" name="title" value= "{{title}}" >
+      </label>
+      <label>
+        <div>art</div>
+        <textarea type="text" name="art">{{art}}</textarea>
+      </label>
+      <br>
+	  <div class = "error">{{error}}</div>
+	  <br>
+      <input type="submit">
+    </form>
+	<br>
+	<form method="get"  action="/favorites">
+		<input type="submit" value="Favorites">
+	</form>
+	<br>
+	{% for art in arts %}
+		<div class="art">
+			<div class="art-title">{{art.titlea}}</div>
+			<pre class="art-body">{{art.arta}}</pre>  
+		</div>
+	{% endfor %}
+  </body>
+</html>
